@@ -241,9 +241,7 @@ Connection: keep-alive
 Set-Cookie: session=eyJjc3JmX3Rva2VuIjp7IiBiIjoiT0RrNVpXUmpZV014T1daalkyUmlOamRsWXpBNVpqUTVZMk0wTkRnMU9ERm1NVFUzTURrME5BPT0ifX0.DhSlgA.Biu7EYC7qfj4x8--HlR8VUZFUgk; HttpOnly; Path=/
 ```
 以上说明我们能够成功的访问到我们的flask-app服务啦,在用linux 终端下的w3m http://10.1.193.82/auth/login 访问一下呢，说明也是没问题的；那后端uwgsi or flask-app or flask-nginx的访问日志此时毋庸置疑是已经有了的。
-
-![](media/15300663207139/15300742642956.jpg)
-
+![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15300742642956.jpg?raw=true)
 
 那问题来了；此时我只是在集群内部能够访问，那如何在外面访问呢？那就主要将flask_nginx_service.yaml中的Type该为nodePort,然后从新部署一下flask_app_nginx_services
 
@@ -282,7 +280,7 @@ Events:            <none>
 ```
 
 此时如果是外网访问就应该是NodeIP+nodePort啦：
-![](media/15300663207139/15300750247449.jpg)
+![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15300750247449.jpg?raw=true)
 
 
 但是这种方式并不是很理想；本来就是要让他直接访问80 port的，于是采用另外一种暴露端口的方式------Ingress
@@ -461,7 +459,8 @@ Set-Cookie: session=eyJjc3JmX3Rva2VuIjp7IiBiIjoiT1RNMVpUWTBZV1V6TkdWaU5EazBZMkl5
 * Connection #0 to host 192.168.56.12 left intact
 ```
 在外部如果要访问也需要绑定域名到node节点，然后访问
-![](media/15300663207139/15301578467095.jpg)
+![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15301578467095.jpg?raw=true)
+
 
 ok至此该项目就部署的差不多啦；
 那pod如何做到伸缩呢；执行以下命令就行了
@@ -486,7 +485,9 @@ flask-app   20        20        20           20          23h
 
 
 坑:
-在上面我部署好ingress-nginx后，通过访问哪一步报错了；于是去查了 pod/nginx-ingress-controller-58nf4 的日志，错误日志刷屏啊![](media/15300663207139/15301582604316.jpg)
+在上面我部署好ingress-nginx后，通过访问哪一步报错了；于是去查了 pod/nginx-ingress-controller-58nf4 的日志，错误日志刷屏啊
+![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15301582604316.jpg?raw=true)
+
 官方文档不完整啊，少了创建ingress-services的内容；
 解决办法：
 
