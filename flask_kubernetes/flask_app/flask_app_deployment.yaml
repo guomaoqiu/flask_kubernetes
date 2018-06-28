@@ -1,0 +1,49 @@
+# deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  namespace: flask-app-extions-stage
+  labels:
+    app: flask-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-app
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: flask-app
+        tier: frontend
+    spec:
+      containers:
+      - image: guomaoqiu/python27baseenv:v2
+        name: flask-app
+        command: ["/usr/bin/supervisord"]
+        args: ["-c","/usr/local/code/supervisord.conf"]
+        #command: ["python"]
+        #args: ["/usr/local/code/manage.py"]
+        #command: ["uwsgi"]
+        #args: ["/usr/local/code/flask_uwsgi.ini"]
+        env:
+        #- name: FLASK-APP-DB-HOST
+        #  value: mysql
+        - name: FLASK-APP-DB-PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 3031
+          name: flask-app
+        volumeMounts:
+        - name: flask-app-persistent-storage
+          mountPath: /usr/local/code
+      volumes:
+      - name: flask-app-persistent-storage
+        persistentVolumeClaim:
+          claimName: flask-app-data-pv-claim

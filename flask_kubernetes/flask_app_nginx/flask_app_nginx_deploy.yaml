@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-nginx
+  namespace: flask-app-extions-stage
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-app-nginx
+  template:
+    metadata:
+      labels:
+        app: flask-app-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: nginx-conf
+            mountPath: "/etc/nginx/nginx.conf"
+            subPath: nginx.conf
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf

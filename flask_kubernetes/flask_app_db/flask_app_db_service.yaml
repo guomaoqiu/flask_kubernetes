@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-db
+  namespace: flask-app-extions-stage
+  labels:
+    app: flask-app-db
+spec:
+  type: NodePort
+  ports:
+  - port: 3306
+    nodePort: 30006
+    targetPort: 3306
+  selector:
+    app: flask-app-db

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky - Login{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Login</h1>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+    <br>
+    <p>忘记密码? <a href="{{ url_for('auth.password_reset_request') }}">点击重置</a>.</p>
+    <p>新用户? <a href="{{ url_for('auth.register') }}">点击注册</a>.</p>
+</div>
+<img src="https://www.linuxprobe.com/wp-content/uploads/2016/02/docker.png" width="40%" class="img-responsive">           
+<hr>
+access_ip: {{ access_ip }}
+{% endblock %}

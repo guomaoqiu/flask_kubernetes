@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+  #namespace: default
+  namespace: flask-app-extions-stage
+spec:
+  rules:
+  - host: test.flaskapp.ingress
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: flask-app-nginx
+          servicePort: 80

@@ -1,0 +1,39 @@
+---
+# flask db deployment 
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: flask-app-db
+  namespace: flask-app-extions-stage
+spec:
+  selector:
+    matchLabels:
+      app: flask-app-db
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        tier: mysql
+        app: flask-app-db
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: flask-app-db-pv-claim
