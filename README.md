@@ -34,12 +34,11 @@ kube-system               Active    29d
 ```
 [root@linux-node1 ~]# systemctl restart nfs-server
 [root@linux-node1 ~]# exportfs
-/data/nginx-data
-		<world>
+# mysql data
 /data/flask-app-db
-		<world>
+# flask app code
 /data/flask-app-data
-		<world>
+		
 ```
 ##### 5.创建flask-app使用的pv及pvc
 ```
