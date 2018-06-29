@@ -133,6 +133,7 @@ Query OK, 1 row affected (0.01 sec)
 ## 部署flask-app
 #### 1.将flask程序代码放到/data/flask-app-data/
 ```
+[root@linux-node1 ~]# cp -rf flask_app_code/* /data/flask-app-data/
 [root@linux-node1 ~]# tree /data/flask-app-data/ -L 1
 /data/flask-app-data/
 ├── app
