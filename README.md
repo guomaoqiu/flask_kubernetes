@@ -42,16 +42,16 @@ kube-system               Active    29d
 ```
 ##### 5.创建flask-app使用的pv及pvc
 ```
-[root@linux-node1 ~]# kubectl create -f flask_k8s/flask-app/flask_app_data_pv.yaml
+[root@linux-node1 ~]# kubectl create -f flask_kubernetes/flask-app/flask_app_data_pv.yaml
 persistentvolume "flask-app-data-pv" created
-[root@linux-node1 ~]# kubectl create -f flask_k8s/flask-app/flask_app_data_pvc.yaml
+[root@linux-node1 ~]# kubectl create -f flask_kubernetes/flask-app/flask_app_data_pvc.yaml
 persistentvolumeclaim "flask-app-data-pv-claim" created
 ```
 ##### 6.创建flask-app-db使用的pv及pvc
 ```
-[root@linux-node1 ~]# kubectl create -f flask_k8s/flask_app_db/flask_app_db_pv.yaml
+[root@linux-node1 ~]# kubectl create -f flask_kubernetes/flask_app_db/flask_app_db_pv.yaml
 persistentvolume "flask-app-db-pv" created
-[root@linux-node1 ~]# kubectl create -f flask_k8s/flask_app_db/flask_app_db_pvc.yaml
+[root@linux-node1 ~]# kubectl create -f flask_kubernetes/flask_app_db/flask_app_db_pvc.yaml
 persistentvolumeclaim "flask-app-db-pv-claim" created
 [root@linux-node1 ~]# kubectl get pv -n flask-app-extions-stage
 NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                                             STORAGECLASS   REASON    AGE
@@ -75,9 +75,9 @@ mysql-pass            Opaque                                1         14s
 ```
 #### 2. 部署 MySQL：
 ```
-[root@linux-node1 ~]# kubectl create -f flask_k8s/flask_app_db/flask_app_db_deploy.yaml
+[root@linux-node1 ~]# kubectl create -f flask_kubernetes/flask_app_db/flask_app_db_deploy.yaml
 deployment.apps "flask-app-db" created
-[root@linux-node1 ~]# kubectl create -f flask_k8s/flask_app_db/flask_app_db_service.yaml
+[root@linux-node1 ~]# kubectl create -f flask_kubernetes/flask_app_db/flask_app_db_service.yaml
 service "flask-app-db" created
 
 # 查看状态
@@ -163,9 +163,9 @@ Query OK, 1 row affected (0.01 sec)
 
 #### 3. 部署flask-app
 ```
-[root@linux-node1 ~]# kubectl create -f flask_k8s/flask_app/flask_app_deployment.yaml
+[root@linux-node1 ~]# kubectl create -f flask_kubernetes/flask_app/flask_app_deployment.yaml
 deployment.apps "flask-app" created
-[root@linux-node1 ~]# kubectl create -f flask_k8s/flask_app/flask_app_service.yaml
+[root@linux-node1 ~]# kubectl create -f flask_kubernetes/flask_app/flask_app_service.yaml
 service "flask-app" created
 
 # 查看状态:
@@ -196,7 +196,7 @@ deployment.extensions/flask-app-db      1         1         1            1      
 因为这个nginx的配置我这里需要修改做一些定制方面的配置，所以有一个将单个配置文件挂载到pod里面的需求；于是这里使用到了k8s的ConfigMap功能
 #### 1. 找到需要挂载进pod的nginx配置文件:
 ```
-[root@linux-node1 ~]# kubectl create  configmap nginx-conf --from-file=/root/flask_k8s/flask_app_nginx/nginx.conf -n  flask-app-extions-stage
+[root@linux-node1 ~]# kubectl create  configmap nginx-conf --from-file=/root/flask_kubernetes/flask_app_nginx/nginx.conf -n  flask-app-extions-stage
 [root@linux-node1 ~]# kubectl get configmap -n flask-app-extions-stage
 NAME         DATA      AGE
 nginx-conf   1         11s
@@ -248,7 +248,7 @@ Set-Cookie: session=eyJjc3JmX3Rva2VuIjp7IiBiIjoiT0RrNVpXUmpZV014T1daalkyUmlOamRs
 那问题来了；此时我只是在集群内部能够访问，那如何在外面访问呢？那就主要将flask_nginx_service.yaml中的Type该为nodePort,然后从新部署一下flask_app_nginx_services
 
 ```
-[root@linux-node1 ~]# more /root/flask_k8s/flask_app_nginx/flask_app_nginx_service.yaml
+[root@linux-node1 ~]# more /root/flask_kubernetes/flask_app_nginx/flask_app_nginx_service.yaml
 kind: Service
 apiVersion: v1
 metadata:
