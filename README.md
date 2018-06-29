@@ -464,7 +464,7 @@ Set-Cookie: session=eyJjc3JmX3Rva2VuIjp7IiBiIjoiT1RNMVpUWTBZV1V6TkdWaU5EazBZMkl5
 ![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15301578467095.jpg?raw=true)
 
 ok至此该项目就部署得差不多了，上面flask-app登录，注册正常！
-![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15301839527512.jpg?raw=true)
+![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15302375026023.jpg?raw=true)
 那pod如何做到伸缩呢；执行以下命令就行了
 
 ```
