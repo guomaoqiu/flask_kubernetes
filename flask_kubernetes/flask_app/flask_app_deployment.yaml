@@ -25,13 +25,7 @@ spec:
         name: flask-app
         command: ["/usr/bin/supervisord"]
         args: ["-c","/usr/local/code/supervisord.conf"]
-        #command: ["python"]
-        #args: ["/usr/local/code/manage.py"]
-        #command: ["uwsgi"]
-        #args: ["/usr/local/code/flask_uwsgi.ini"]
         env:
-        #- name: FLASK-APP-DB-HOST
-        #  value: mysql
         - name: FLASK-APP-DB-PASSWORD
           valueFrom:
             secretKeyRef:
