@@ -282,7 +282,7 @@ Events:            <none>
 ```
 
 此时如果是外网访问就应该是NodeIP+nodePort啦：
-![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15300750247449.jpg?raw=true)
+![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15302385275244.jpg?raw=true)
 
 
 但是这种方式并不是很理想；本来就是要让他直接访问80 port的，于是采用另外一种暴露端口的方式------Ingress
@@ -461,7 +461,7 @@ Set-Cookie: session=eyJjc3JmX3Rva2VuIjp7IiBiIjoiT1RNMVpUWTBZV1V6TkdWaU5EazBZMkl5
 * Connection #0 to host 192.168.56.12 left intact
 ```
 在外部如果要访问也需要绑定域名到node节点，然后访问
-![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15301578467095.jpg?raw=true)
+![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15302383360947.jpg?raw=true)
 
 ok至此该项目就部署得差不多了，上面flask-app登录，注册正常！
 ![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15302375026023.jpg?raw=true)
