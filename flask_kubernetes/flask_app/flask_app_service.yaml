@@ -6,6 +6,8 @@ metadata:
   labels:
     app: flask-app
 spec:
+  #默认情况下，后端的选择是随机的。可以通过设置service.spec.sessionAffinity为"ClientIP"（默认值为"None"）来选择基于客户端IP的会话亲和性。
+  sessionAffinity: ClientIP
   ports:
   - protocol: TCP
     port: 3032
