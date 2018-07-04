@@ -22,6 +22,10 @@ spec:
     spec:
       containers:
       - image: guomaoqiu/python27baseenv:v2
+        # 镜像检查有三个选择:
+        # IfNotPresent，如果本地有就不检查，如果没有就拉取；
+        # Never，每次都不检查（不管本地是否有）
+        # Always，每次都检查
         imagePullPolicy: IfNotPresent
         name: flask-app
         command: ["/usr/bin/supervisord"]
