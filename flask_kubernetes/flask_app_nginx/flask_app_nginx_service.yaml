@@ -4,7 +4,8 @@ metadata:
   name: flask-app-nginx
   namespace: flask-app-extions-stage
 spec:
-  #type: NodePort
+  # 默认情况下，后端的选择是随机的。可以通过设置service.spec.sessionAffinity为"ClientIP"（默认值为"None"）来选择基于客户端IP的会话亲和性。
+  sessionAffinity: ClientIP
   selector:
     app: flask-app-nginx
   ports:
