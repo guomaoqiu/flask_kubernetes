@@ -308,7 +308,7 @@ flask_8s/ingress-nginx/
 ├── default-backend.yaml         :提供一个缺省的后台错误页面 404
 ├── mandatory.yaml               :这个文件包含了这个目录下面所有yaml的内容，可以不用
 ├── namespace.yaml               :创建一个独立的命名空间 ingress-nginx
-├── rbac.yaml					   :创建对应的role rolebinding 用于rbac
+├── rbac.yaml			 :创建对应的role rolebinding 用于rbac
 ├── tcp-services-configmap.yaml  :修改L4负载均衡配置的configmap
 ├── udp-services-configmap.yaml  :修改L4负载均衡配置的configmap
 └── with-rbac.yaml               :有应用rbac的nginx-ingress-controller组件   
@@ -386,9 +386,9 @@ spec:
           serviceName: flask-app-nginx
           servicePort: 80
 EOF
-// host: 对应的域名 
-// path: url上下文 
-// backend:后向转发 到对应的 serviceName: servicePort:
+# host: 对应的域名 
+# path: url上下文 
+# backend:后向转发 到对应的 serviceName: servicePort:
 
 [root@linux-node1 ingress-nginx]# kubectl apply -f test-ingress.yaml
 [root@linux-node1 ingress-nginx]# kubectl get ingress -n flask-app-extions-stage
