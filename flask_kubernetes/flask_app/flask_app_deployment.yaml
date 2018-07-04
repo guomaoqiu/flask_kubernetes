@@ -22,6 +22,7 @@ spec:
     spec:
       containers:
       - image: guomaoqiu/python27baseenv:v2
+        imagePullPolicy: IfNotPresent
         name: flask-app
         command: ["/usr/bin/supervisord"]
         args: ["-c","/usr/local/code/supervisord.conf"]
