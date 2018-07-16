@@ -25,7 +25,13 @@ spec:
           - name: nginx-conf
             mountPath: "/etc/nginx/nginx.conf"
             subPath: nginx.conf
+          - name: host-time
+            mountPath: /etc/localtime
       volumes:
       - name: nginx-conf
         configMap:
           name: nginx-conf
+      - name: host-time
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Shanghai
+

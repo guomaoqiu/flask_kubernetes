@@ -7,7 +7,7 @@ metadata:
   labels:
     app: flask-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: flask-app
@@ -22,14 +22,22 @@ spec:
     spec:
       containers:
       - image: guomaoqiu/python27baseenv:v2
-        # 镜像检查有三个选择:
-        # IfNotPresent，如果本地有就不检查，如果没有就拉取；
-        # Never，每次都不检查（不管本地是否有）
-        # Always，每次都检查
-        imagePullPolicy: IfNotPresent
         name: flask-app
+        # 在容器启动3秒后，kubelet将发送第一个readinessProbe探针，这将连接到容器的3031端口，如果探测成功，则该Pod将被标识为ready，5秒后，kubelet将进行第二次连接。
+        readinessProbe:
+          tcpSocket:
+            port: 3031
+          initialDelaySeconds: 3  # 首次检查时间
+          periodSeconds: 5       # 检查时间间隔
+        # 在容器启动10秒后，kubelet将发送第一个livenessProbe探针，仍然尝试连接容器的3031端口，如果连接失败则重启容器。
+        livenessProbe:
+          tcpSocket:
+            port: 3031
+          initialDelaySeconds: 10   
+          periodSeconds: 15
         command: ["/usr/bin/supervisord"]
         args: ["-c","/usr/local/code/supervisord.conf"]
+        #command: ["python", "/usr/local/code/manage.py"]
         env:
         - name: FLASK-APP-DB-PASSWORD
           valueFrom:
@@ -42,7 +50,12 @@ spec:
         volumeMounts:
         - name: flask-app-persistent-storage
           mountPath: /usr/local/code
+        - name: host-time
+          mountPath: /etc/localtime
       volumes:
       - name: flask-app-persistent-storage
         persistentVolumeClaim:
           claimName: flask-app-data-pv-claim
+      - name: host-time
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Shanghai
