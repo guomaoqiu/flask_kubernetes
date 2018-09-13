@@ -2,6 +2,9 @@
 ## 序
 此次部署是在上篇博文中搭建的K8S集群基础之上进行的，涉及使用到的容器已经推到Dockerhub
 
+## 配置清单
+![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/1536823892.jpg?raw=true)
+
 ## 逻辑流程图
 ![](https://github.com/guomaoqiu/flask_kubernetes/blob/master/screenshots/15302459587264.jpg?raw=true)
 
